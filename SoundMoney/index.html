@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundMoney</title>
+  <style>
+    body {
+      background-color: black;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: black;
+      color: #2bcc1c;
+      padding: 10px 20px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Added to vertically center the logo */
+    }
+    h1 {
+      /* border: #2bcc1c 1px solid;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      border-top-right-radius: 20px; */
+      margin: 0;
+      font-size: 24px;
+    }
+    #logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    #music-container {
+      padding: 20px;
+    }
+    .music-card {
+      
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .music-card .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    .music-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .music-card p {
+      margin: 0;
+    }
+    .duration {
+      font-size: 14px;
+      color: #888;
+    }
+    .seconds-listened {
+      font-size: 14px;
+      color: #888;
+    }
+    .tokens-earned {
+      font-size: 14px;
+      color: #888;
+    }
+    #login-button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img id="logo" src="/home/delamoar/developments/soundmoney/src/LOGO/musiclogo2.png" alt="Logo">
+    <h1>SoundMoney</h1>
+    <button id="login-button">Login</button>
+  </header>
+  <section id="music-container">
+    <div class="music-card">
+      <img class="logo" src="/home/delamoar/developments/soundmoney/src/LOGO/musiclogo2.png" alt="Logo">
+      <div>
+        <h3>American Dream</h3>
+        <p>21 Savage</p>
+      </div>
+      <div class="duration">0:00 / 0:00</div>
+      <div class="seconds-listened">Seconds listened: 0</div>
+      <div class="tokens-earned">Tokens earned: 0</div>
+      <audio id="music-player" controls>
+        <source src="/home/delamoar/developments/soundmoney/src/music/y2mate.com - AAP Rocky  Praise The Lord Da Shine Official Video ft Skepta.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    <!-- Additional music cards can be added here dynamically -->
+  </section>
+
+  <script>
+    // Get the audio element
+    const audioElement = document.getElementById('music-player');
+    const durationDisplay = document.querySelector('.duration');
+    const secondsListenedDisplay = document.querySelector('.seconds-listened');
+    const tokensEarnedDisplay = document.querySelector('.tokens-earned');
+
+    let totalSecondsListened = 0;
+    let totalTokensEarned = 0;
+
+    // Add event listener for time update
+    audioElement.addEventListener('timeupdate', function() {
+      // Get the current time in seconds
+      const currentTime = Math.floor(this.currentTime);
+
+      // Format the current time
+      const formattedCurrentTime = formatTime(currentTime);
+
+      // Get the duration of the audio
+      const duration = Math.floor(this.duration);
+
+      // Format the duration
+      const formattedDuration = formatTime(duration);
+
+      // Update the duration display
+      durationDisplay.textContent = `${formattedCurrentTime} / ${formattedDuration}`;
+
+      // Update total seconds listened
+      totalSecondsListened++;
+      secondsListenedDisplay.textContent = `Seconds listened: ${totalSecondsListened}`;
+
+      // Check if two minutes (120 seconds) have passed
+      if (totalSecondsListened % 1920 === 0) {
+        // Increment tokens earned
+        totalTokensEarned++;
+        tokensEarnedDisplay.textContent = `Tokens earned: ${totalTokensEarned}`;
+      }
+    });
+
+    // Function to format time in MM:SS format
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+  </script>
+
+<a href="/path/to/your/apk/file.apk" download>Download SoundMoney App for Android</a>
+</body>
+</html>
