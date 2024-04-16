@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoundMoney</title>
+  <style>
+    body {
+      background-color: rgb(26, 228, 144);
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: black;
+      color: #2bcc1c;
+      padding: 10px 20px;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Added to vertically center the logo */
+    }
+    h1 {
+      /* border: #2bcc1c 1px solid;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      border-top-right-radius: 20px; */
+      margin: 0;
+      font-size: 24px;
+    }
+    #logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    #music-container {
+      padding: 20px;
+    }
+    .music-card {
+      margin-bottom: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #fff;
+      padding: 10px;
+      border-radius: 10px;
+    }
+    .music-card .logo {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+    .music-card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .music-card p {
+      margin: 0;
+    }
+    .duration {
+      font-size: 14px;
+      color: #000000;
+    }
+    .seconds-listened {
+      font-size: 14px;
+      color: #080808;
+    }
+    .tokens-earned {
+      font-size: 14px;
+      color: #020202;
+    }
+    #login-button {
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin-top: 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .buttons-container {
+      display: flex;
+      gap: 10px;
+    }
+    .button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .like-count {
+      font-size: 14px;
+      color: #020202;
+    }
+    .comment-card {
+      display: none;
+      border: 1px solid #000;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    .login-card {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      z-index: 1000;
+    }
+    footer {
+      background-color: black;
+      color: #2bcc1c;
+      padding: 10px;
+      text-align: center;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    /* Media queries for responsive design */
+    @media only screen and (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: center;
+      }
+      #logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      h1 {
+        font-size: 20px;
+      }
+      .music-card {
+        width: 90%;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img id="logo" src="/home/delamoar/developments/soundmoney2/src/LOGO/applogo.png" alt="Logo">
+    <h1>SoundMoney</h1>
+    <button id="login-button">Login</button>
+  </header>
+  <section id="music-container">
+    <div class="music-card">
+      <img class="logo" src="/home/delamoar/developments/soundmoney2/src/LOGO/musiclogo.png" alt="Logo">
+      <div>
+        <h3>American Dream</h3>
+        <p>21 Savage</p>
+      </div>
+      <div class="duration">0:00 / 0:00</div>
+      <div class="seconds-listened">Seconds listened: 0</div>
+      <div class="tokens-earned">Tokens earned: 0</div>
+      <div class="buttons-container">
+        <button class="button like-button">Like</button>
+        <button class="button comment-button">Comment</button>
+        <button class="button share-button">Share</button> <!-- Added share button -->
+      </div>
+      <div class="like-count">0 Likes</div>
+      <div class="comment-card">
+        <h4>Comments</h4>
+        <!-- Comment section to display comments -->
+      </div>
+      <audio id="music-player" controls>
+        <source src="/home/delamoar/developments/soundmoney2/src/music/y2mate.com - AAP Rocky  Praise The Lord Da Shine Official Video ft Skepta.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+      </audio>
+    </div>
+    <!-- Additional music cards can be added here dynamically -->
+  </section>
+
+  <div class="login-card">
+    <h2>Login</h2>
+    <!-- Your login form or login prompt here -->
+    <!-- Example form -->
+    <form>
+      <label for="username">Username:</label><br>
+      <input type="text" id="username" name="username"><br>
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" name="password"><br><br>
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <footer>
+    <button>Home</button>
+    <button>Search</button>
+    <button>My Sounds</button>
+  </footer>
+
+  <script>
+    // Get the audio element
+    const audioElement = document.getElementById('music-player');
+    const durationDisplay = document.querySelector('.duration');
+    const secondsListenedDisplay = document.querySelector('.seconds-listened');
+    const tokensEarnedDisplay = document.querySelector('.tokens-earned');
+    const likeCountDisplay = document.querySelector('.like-count');
+    const commentCard = document.querySelector('.comment-card');
+    const loginCard = document.querySelector('.login-card');
+    const loginButton = document.getElementById('login-button');
+    const shareButton = document.querySelector('.share-button'); // Get the share button
+
+    let totalSecondsListened = 0;
+    let totalTokensEarned = 0;
+    let likeCount = 0;
+
+    // Add event listener for time update
+    audioElement.addEventListener('timeupdate', function() {
+      // Get the current time in seconds
+      const currentTime = Math.floor(this.currentTime);
+
+      // Format the current time
+      const formattedCurrentTime = formatTime(currentTime);
+
+      // Get the duration of the audio
+      const duration = Math.floor(this.duration);
+
+      // Format the duration
+      const formattedDuration = formatTime(duration);
+
+      // Update the duration display
+      durationDisplay.textContent = `${formattedCurrentTime} / ${formattedDuration}`;
+
+      // Update total seconds listened
+      totalSecondsListened++;
+      secondsListenedDisplay.textContent = `Seconds listened: ${totalSecondsListened}`;
+
+      // Check if two minutes (120 seconds) have passed
+      if (totalSecondsListened % 120 === 0) {
+        // Increment tokens earned
+        totalTokensEarned++;
+        tokensEarnedDisplay.textContent = `Tokens earned: ${totalTokensEarned}`;
+      }
+    });
+
+    // Function to format time in MM:SS format
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = seconds % 60;
+      return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+    }
+
+    // Like button functionality
+    const likeButton = document.querySelector('.like-button');
+    likeButton.addEventListener('click', function() {
+      // Increment like count
+      likeCount++;
+      // Update like count display
+      likeCountDisplay.textContent = `${likeCount} Likes`;
+    });
+
+    // Comment button functionality
+    const commentButton = document.querySelector('.comment-button');
+    commentButton.addEventListener('click', function() {
+      // Toggle comment card visibility
+      commentCard.style.display = commentCard.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Login button functionality
+    loginButton.addEventListener('click', function() {
+      // Display login card
+      loginCard.style.display = 'block';
+    });
+
+    // Share button functionality
+    shareButton.addEventListener('click', function() {
+      // Implement share functionality here
+      // For example, you can use the Web Share API if supported by the browser
+      if (navigator.share) {
+        // If Web Share API is supported
+        navigator.share({
+          title: 'Share SoundMoney Website',
+          text: 'Check out SoundMoney website!',
+          url: window.location.href
+        })
+        .then(() => console.log('Shared successfully'))
+        .catch((error) => console.error('Error sharing:', error));
+      } else {
+        // If Web Share API is not supported, provide a fallback behavior
+        alert('Web Share API is not supported in your browser. You can manually share the website.');
+      }
+    });
+  </script>
+
+<a href="/path/to/your/apk/file.apk" download>Download SoundMoney App for Android</a>
+</body>
+</html>
